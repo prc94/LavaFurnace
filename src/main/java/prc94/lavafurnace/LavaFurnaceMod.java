@@ -24,6 +24,7 @@ public class LavaFurnaceMod {
     public static final String MOD_ID = "lavafurnacemod";
     public static final Logger LOGGER = LogManager.getLogger();
 
+    @SuppressWarnings("unused")
     public LavaFurnaceMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);
@@ -46,14 +47,14 @@ public class LavaFurnaceMod {
 
         @SubscribeEvent
         public static void onItemRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
-            LOGGER.debug("Registering items");
+            LOGGER.debug("Registering Items");
             itemRegistryEvent.getRegistry().registerAll(
                     new BlockItem(LAVA_FURNACE, new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName(LAVA_FURNACE.getRegistryName()));
         }
 
         @SubscribeEvent
         public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> containerRegistryEvent) {
-            LOGGER.debug("Registering Container objects");
+            LOGGER.debug("Registering ContainerType objects");
             containerRegistryEvent.getRegistry().registerAll(LAVA_FURNACE_CONTAINER.setRegistryName(MOD_ID, "lava_furnace"));
         }
 
