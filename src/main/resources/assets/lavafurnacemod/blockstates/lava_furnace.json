@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north,lit=false": {
-      "model": "lavafurnacemod:block/lavafurnace"
+      "model": "lavafurnacemod:block/lava_furnace"
     },
     "facing=south,lit=false": {
-      "model": "lavafurnacemod:block/lavafurnace",
+      "model": "lavafurnacemod:block/lava_furnace",
       "y": 180
     },
     "facing=west,lit=false": {
-      "model": "lavafurnacemod:block/lavafurnace",
+      "model": "lavafurnacemod:block/lava_furnace",
       "y": 270
     },
     "facing=east,lit=false": {
-      "model": "lavafurnacemod:block/lavafurnace",
+      "model": "lavafurnacemod:block/lava_furnace",
       "y": 90
     },
     "facing=north,lit=true": {

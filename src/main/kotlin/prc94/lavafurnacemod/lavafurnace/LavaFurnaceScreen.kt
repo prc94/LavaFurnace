@@ -34,86 +34,86 @@ class LavaFurnaceScreen(container: LavaFurnaceContainer, inv: PlayerInventory, t
 
     override fun init() {
         super.init()
-        this.wide = this.width < 379
-        this.recipeBook.func_201520_a(this.width, this.height, this.minecraft!!, this.wide, this.container)
-        this.guiLeft = this.recipeBook.updateScreenPosition(this.wide, this.width, this.xSize)
-        this.addButton(ImageButton(
-                this.guiLeft + 20,
-                this.height / 2 - 49,
+        wide = width < 379
+        recipeBook.func_201520_a(width, height, minecraft!!, wide, container)
+        guiLeft = recipeBook.updateScreenPosition(wide, width, xSize)
+        addButton(ImageButton(
+                guiLeft + 20,
+                height / 2 - 49,
                 20, 18, 0, 0, 19,
                 btnTexture) { btn: Button ->
-            this.recipeBook.func_201518_a(this.wide)
-            this.recipeBook.toggleVisibility()
-            this.guiLeft = this.recipeBook.updateScreenPosition(this.wide, this.width, this.xSize)
+            recipeBook.func_201518_a(wide)
+            recipeBook.toggleVisibility()
+            guiLeft = recipeBook.updateScreenPosition(wide, width, xSize)
             if (btn is ImageButton)
-                btn.setPosition(this.guiLeft + 20, this.height / 2 - 49)
+                btn.setPosition(guiLeft + 20, height / 2 - 49)
         })
     }
 
     override fun tick() {
         super.tick()
-        this.recipeBook.tick()
+        recipeBook.tick()
     }
 
     override fun render(p_render_1: Int, p_render_2: Int, p_render_3: Float) {
         this.renderBackground()
-        if (this.recipeBook.isVisible && this.wide) {
-            this.drawGuiContainerBackgroundLayer(p_render_3, p_render_1, p_render_2)
-            this.recipeBook.render(p_render_1, p_render_2, p_render_3)
+        if (recipeBook.isVisible && wide) {
+            drawGuiContainerBackgroundLayer(p_render_3, p_render_1, p_render_2)
+            recipeBook.render(p_render_1, p_render_2, p_render_3)
         } else {
-            this.recipeBook.render(p_render_1, p_render_2, p_render_3)
+            recipeBook.render(p_render_1, p_render_2, p_render_3)
             super.render(p_render_1, p_render_2, p_render_3)
-            this.recipeBook.renderGhostRecipe(this.guiLeft, this.guiTop, true, p_render_3)
+            recipeBook.renderGhostRecipe(guiLeft, guiTop, true, p_render_3)
         }
-        this.renderHoveredToolTip(p_render_1, p_render_2)
-        this.recipeBook.renderTooltip(this.guiLeft, this.guiTop, p_render_1, p_render_2)
+        renderHoveredToolTip(p_render_1, p_render_2)
+        recipeBook.renderTooltip(guiLeft, guiTop, p_render_1, p_render_2)
     }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-        val s = this.title.formattedText
-        this.font.drawString(s, (this.xSize / 2 - this.font.getStringWidth(s) / 2).toFloat(), 6.0F, 4210752)
-        this.font.drawString(this.playerInventory.displayName.formattedText, 8.0F, (this.ySize - 96 + 2).toFloat(), 4210752)
+        title.formattedText.let { s ->
+            font.drawString(s, (xSize / 2 - font.getStringWidth(s) / 2).toFloat(), 6.0F, 4210752)
+            font.drawString(playerInventory.displayName.formattedText, 8.0F, (ySize - 96 + 2).toFloat(), 4210752)
+        }
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F)
-        this.minecraft!!.textureManager.bindTexture(this.textures)
-        val i = this.guiLeft
-        val j = this.guiTop
-        this.blit(i, j, 0, 0, this.xSize, this.ySize)
-        if (this.container.isBurning()) {
-            val k = this.container.getBurnLeftScaled()
+        minecraft!!.textureManager.bindTexture(textures)
+        val i = guiLeft
+        val j = guiTop
+        this.blit(i, j, 0, 0, xSize, ySize)
+        if (container.isBurning()) {
+            val k = container.getBurnLeftScaled()
             this.blit(i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1)
         }
-        val l = this.container.getCookProgressionScaled()
-        this.blit(i + 79, j + 34, 176, 14, l + 1, 16)
+        this.blit(i + 79, j + 34, 176, 14, container.getCookProgressionScaled() + 1, 16)
     }
 
     override fun mouseClicked(pMouseClicked1: Double, pMouseClicked3: Double, pMouseClicked5: Int): Boolean =
-            if (this.recipeBook.mouseClicked(pMouseClicked1, pMouseClicked3, pMouseClicked5)) true
-            else this.wide && this.recipeBook.isVisible || super.mouseClicked(pMouseClicked1, pMouseClicked3, pMouseClicked5)
+            if (recipeBook.mouseClicked(pMouseClicked1, pMouseClicked3, pMouseClicked5)) true
+            else wide && recipeBook.isVisible || super.mouseClicked(pMouseClicked1, pMouseClicked3, pMouseClicked5)
 
     override fun handleMouseClick(slotIn: Slot?, slotId: Int, mouseButton: Int, type: ClickType) {
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         super.handleMouseClick(slotIn, slotId, mouseButton, type)
-        this.recipeBook.slotClicked(slotIn)
+        recipeBook.slotClicked(slotIn)
     }
 
-    override fun keyPressed(pKeyPressed1: Int, pKeyPressed2: Int, pKeyPressed3: Int): Boolean = !this.recipeBook.keyPressed(pKeyPressed1, pKeyPressed2, pKeyPressed3) && super.keyPressed(pKeyPressed1, pKeyPressed2, pKeyPressed3)
+    override fun keyPressed(pKeyPressed1: Int, pKeyPressed2: Int, pKeyPressed3: Int): Boolean = !recipeBook.keyPressed(pKeyPressed1, pKeyPressed2, pKeyPressed3) && super.keyPressed(pKeyPressed1, pKeyPressed2, pKeyPressed3)
 
     override fun hasClickedOutside(p1953611: Double, p1953613: Double, p1953615: Int, p1953616: Int, p1953617: Int): Boolean {
-        val flag = p1953611 < p1953615.toDouble() || p1953613 < p1953616.toDouble() || p1953611 >= (p1953615 + this.xSize).toDouble() || p1953613 >= (p1953616 + this.ySize).toDouble()
-        return this.recipeBook.func_195604_a(p1953611, p1953613, this.guiLeft, this.guiTop, this.xSize, this.ySize, p1953617) && flag
+        val flag = p1953611 < p1953615.toDouble() || p1953613 < p1953616.toDouble() || p1953611 >= (p1953615 + xSize).toDouble() || p1953613 >= (p1953616 + ySize).toDouble()
+        return recipeBook.func_195604_a(p1953611, p1953613, guiLeft, guiTop, xSize, ySize, p1953617) && flag
     }
 
-    override fun charTyped(pCharTyped1: Char, pCharTyped2: Int): Boolean = this.recipeBook.charTyped(pCharTyped1, pCharTyped2) || super.charTyped(pCharTyped1, pCharTyped2)
+    override fun charTyped(pCharTyped1: Char, pCharTyped2: Int): Boolean = recipeBook.charTyped(pCharTyped1, pCharTyped2) || super.charTyped(pCharTyped1, pCharTyped2)
 
-    override fun recipesUpdated() = this.recipeBook.recipesUpdated()
+    override fun recipesUpdated() = recipeBook.recipesUpdated()
 
-    override fun func_194310_f(): RecipeBookGui = this.recipeBook
+    override fun func_194310_f(): RecipeBookGui = recipeBook
 
     override fun removed() {
-        this.recipeBook.removed()
+        recipeBook.removed()
         super.removed()
     }
 

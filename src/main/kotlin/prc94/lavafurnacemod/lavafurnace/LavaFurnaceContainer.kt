@@ -114,7 +114,7 @@ class LavaFurnaceContainer(id: Int, playerInventoryIn: PlayerInventory,
     /**
      * Fake slot to replace default furnace fuel slot. Always disabled and can't accept any items.
      */
-    private class FakeFurnaceFuelSlot(inventory: IInventory, index: Int, xPos: Int, yPos: Int) : Slot(inventory, index, xPos, yPos) {
+    private inner class FakeFurnaceFuelSlot(inventory: IInventory, index: Int, xPos: Int, yPos: Int) : Slot(inventory, index, xPos, yPos) {
         @OnlyIn(Dist.CLIENT)
         override fun isEnabled(): Boolean = false
 
