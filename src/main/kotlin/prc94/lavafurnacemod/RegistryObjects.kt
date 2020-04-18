@@ -14,7 +14,8 @@ import prc94.lavafurnacemod.lavafurnace.LavaFurnaceContainer
 import prc94.lavafurnacemod.lavafurnace.LavaFurnaceTileEntity
 import java.util.function.Supplier
 
-val LAVA_FURNACE: Block = LavaFurnaceBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLACK)
+val LAVA_FURNACE: Block = LavaFurnaceBlock(Block.Properties
+        .create(Material.ROCK, MaterialColor.BLACK)
         .hardnessAndResistance(50.0F, 1200.0F)
         .harvestTool(ToolType.PICKAXE)
         .harvestLevel(3)
@@ -25,8 +26,7 @@ val LAVA_FURNACE_CONTAINER: ContainerType<LavaFurnaceContainer> = IForgeContaine
         .setRegistryName(LAVA_FURNACE.registryName) as ContainerType<LavaFurnaceContainer>
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-val LAVA_FURNACE_TILEENTITY: TileEntityType<*> = TileEntityType.Builder.create(Supplier { LavaFurnaceTileEntity() }, LAVA_FURNACE)
+val LAVA_FURNACE_TILEENTITY: TileEntityType<*> = TileEntityType.Builder
+        .create(Supplier(::LavaFurnaceTileEntity), LAVA_FURNACE)
         .build(null)
         .setRegistryName(LAVA_FURNACE.registryName)
-
-

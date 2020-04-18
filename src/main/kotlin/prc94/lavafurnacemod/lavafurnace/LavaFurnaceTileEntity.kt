@@ -31,34 +31,39 @@ class LavaFurnaceTileEntity : AbstractFurnaceTileEntity(LAVA_FURNACE_TILEENTITY,
 
     override fun createMenu(id: Int, player: PlayerInventory) = LavaFurnaceContainer(id, player, this, furnaceData)
 
-    private fun isBurning() = this.burnTime > 0
+    private val isBurning
+        get() = burnTime > 0
 
-    @Suppress("UNCHECKED_CAST")
     override fun tick() {
-        val flag = isBurning()
+        val flag = isBurning
         var flag1 = false
-        if (world?.isRemote != true) {
-            if (world!!.getBlockState(pos.down()).block == Blocks.LAVA) this.burnTime = 100
-            else this.burnTime = 0
-            if (isBurning() && !items[0].isEmpty) {
-                val irecipe: IRecipe<*>? = world!!.recipeManager.getRecipe(recipeType as IRecipeType<FurnaceRecipe>, this, world!!).orElse(null)
-                if (!isBurning() && canSmelt(irecipe)) {
-                    this.recipesUsed = this.burnTime
-                    if (isBurning()) flag1 = true
+        world?.let { world ->
+            if (!world.isRemote) {
+                if (world.getBlockState(pos.down()).block == Blocks.LAVA) this.burnTime = 200
+                else this.burnTime = 0
+                if (isBurning && !items[0].isEmpty) {
+                    @Suppress("UNCHECKED_CAST")
+                    world.recipeManager.getRecipe(recipeType as IRecipeType<FurnaceRecipe>, this, world)
+                            .orElse(null).let { irecipe ->
+                                if (!isBurning && canSmelt(irecipe)) {
+                                    this.recipesUsed = this.burnTime
+                                    if (isBurning) flag1 = true
+                                }
+                                if (isBurning && canSmelt(irecipe)) {
+                                    this.cookTime += 1
+                                    if (this.cookTime == this.cookTimeTotal) {
+                                        this.cookTime = 0
+                                        this.cookTimeTotal = func_214005_h()
+                                        smelt(irecipe)
+                                        flag1 = true
+                                    }
+                                } else this.cookTime = 0
+                            }
+                } else if (!isBurning && this.cookTime > 0) this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal)
+                if (flag != isBurning) {
+                    flag1 = true
+                    world.setBlockState(pos, world.getBlockState(pos).with(AbstractFurnaceBlock.LIT, isBurning), 3)
                 }
-                if (isBurning() && canSmelt(irecipe)) {
-                    this.cookTime += 1
-                    if (this.cookTime == this.cookTimeTotal) {
-                        this.cookTime = 0
-                        this.cookTimeTotal = func_214005_h()
-                        smelt(irecipe)
-                        flag1 = true
-                    }
-                } else this.cookTime = 0
-            } else if (!isBurning() && this.cookTime > 0) this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal)
-            if (flag != isBurning()) {
-                flag1 = true
-                world!!.setBlockState(pos, world!!.getBlockState(pos).with(AbstractFurnaceBlock.LIT, isBurning()), 3)
             }
         }
         if (flag1) markDirty()
@@ -69,12 +74,15 @@ class LavaFurnaceTileEntity : AbstractFurnaceTileEntity(LAVA_FURNACE_TILEENTITY,
             val itemstack = items[0]
             val itemstack1 = recipe.recipeOutput
             val itemstack2 = items[2]
-            if (itemstack2.isEmpty) items[2] = itemstack1.copy()
-            else if (itemstack2.item == itemstack1.item) itemstack2.grow(itemstack1.count)
-            if (!world!!.isRemote()) this.recipeUsed = recipe
-            if ((itemstack.item == Blocks.WET_SPONGE.asItem()) && !items[1].isEmpty && (items[1].item == Items.BUCKET)) items[1] = ItemStack(Items.WATER_BUCKET)
+            if (itemstack2.isEmpty)
+                items[2] = itemstack1.copy()
+            else if (itemstack2.item == itemstack1.item)
+                itemstack2.grow(itemstack1.count)
+            if (!world!!.isRemote())
+                this.recipeUsed = recipe
+            if ((itemstack.item == Blocks.WET_SPONGE.asItem()) && !items[1].isEmpty && (items[1].item == Items.BUCKET))
+                items[1] = ItemStack(Items.WATER_BUCKET)
             itemstack.shrink(1)
         }
     }
-
 }

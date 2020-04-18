@@ -2,20 +2,17 @@ package prc94.lavafurnacemod
 
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import prc94.lavafurnacemod.lavafurnace.LavaFurnaceContainer
 import prc94.lavafurnacemod.lavafurnace.LavaFurnaceScreen
 import thedarkcolour.kotlinforforge.forge.MOD_CONTEXT as ModLoadingContext
 
@@ -28,8 +25,8 @@ class LavaFurnaceMod {
     }
 
     private fun doClientStuff() {
-        log.debug("Doing client stuff")
-        ScreenManager.registerFactory(LAVA_FURNACE_CONTAINER) { p: LavaFurnaceContainer, p1: PlayerInventory, p2: ITextComponent -> LavaFurnaceScreen(p, p1, p2) }
+        log.debug("Registering LavaFurnaceScreen at ScreenManager")
+        ScreenManager.registerFactory(LAVA_FURNACE_CONTAINER, ::LavaFurnaceScreen)
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
