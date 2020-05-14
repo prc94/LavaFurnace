@@ -24,6 +24,13 @@ class LavaFurnaceTileEntity : AbstractFurnaceTileEntity(LAVA_FURNACE_TILEENTITY,
     private val isBurning: Boolean
         get() = burnTime > 0
 
+    private var skipCookTimeTickFlag: Boolean = false
+        get() {
+            if (!isBurning)
+                field = false
+            return field
+        }
+
     override fun tick() {
         val flag = isBurning
         var flag1 = false
@@ -43,10 +50,13 @@ class LavaFurnaceTileEntity : AbstractFurnaceTileEntity(LAVA_FURNACE_TILEENTITY,
                                     if (isBurning) flag1 = true
                                 }
                                 if (isBurning && canSmelt(irecipe)) {
-                                    this.cookTime += 1
-                                    if (this.cookTime == this.cookTimeTotal) {
-                                        this.cookTime = 0
-                                        this.cookTimeTotal = func_214005_h()
+                                    if (!skipCookTimeTickFlag) {
+                                        cookTimeCurrent += 1
+                                        skipCookTimeTickFlag = true
+                                    } else skipCookTimeTickFlag = false
+                                    if (cookTimeCurrent == this.cookTimeTotal) {
+                                        cookTimeCurrent = 0
+                                        cookTimeTotal = cookTime
                                         smelt(irecipe)
                                         flag1 = true
                                     }
