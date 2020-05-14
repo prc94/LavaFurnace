@@ -1,6 +1,5 @@
 package prc94.lavafurnacemod.lavafurnace
 
-import net.minecraft.client.gui.recipebook.AbstractRecipeBookGui
 import net.minecraft.client.gui.recipebook.FurnaceRecipeGui
 import net.minecraft.client.gui.screen.inventory.AbstractFurnaceScreen
 import net.minecraft.entity.player.PlayerInventory
@@ -17,7 +16,7 @@ class LavaFurnaceScreen(container: LavaFurnaceContainer, inv: PlayerInventory, t
 
     companion object {
         private val textures = ResourceLocation(MOD_ID, "textures/gui/container/lava_furnace.png")
-        private val recipeBook: AbstractRecipeBookGui = object : FurnaceRecipeGui() {
+        private val recipeBook = object : FurnaceRecipeGui() {
             val items = setOf(Items.LAVA_BUCKET)
             override fun func_212958_h() = items
         }

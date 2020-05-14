@@ -1,5 +1,6 @@
 package prc94.lavafurnacemod.lavafurnace
 
+import net.minecraft.block.Blocks
 import net.minecraft.block.FurnaceBlock
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.stats.Stats.INTERACT_WITH_FURNACE
@@ -7,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 
-class LavaFurnaceBlock(builder: Properties) : FurnaceBlock(builder) {
+class LavaFurnaceBlock : FurnaceBlock(Properties.from(Blocks.OBSIDIAN)) {
 
     override fun createNewTileEntity(worldIn: IBlockReader) = LavaFurnaceTileEntity()
 
