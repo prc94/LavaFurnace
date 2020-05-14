@@ -1,16 +1,13 @@
 modLoader="kotlinforforge"
 loaderVersion="[1,)"
-#issueTrackerURL="http://my.issue.tracker/"
 [[mods]]
 modId="lavafurnacemod"
-version="${file.jarVersion}"
-displayName="Lava Furnace Mod"
-
-credits="Just a furnace that run on Lava"
+version="${version}"
+displayName="Lava Furnace"
 authors="prc94"
 description='''
-Lava Furnace.
-Place lava block beneath it to make it run.
+Lava Furnace
+Place a lava block beneath it to make it run.
 Crafted just like normal furnace, but from 8 obsidian instead of cobblestone.
 '''
 [[dependencies.lavafurnacemod]]
