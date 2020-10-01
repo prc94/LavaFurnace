@@ -1,5 +1,6 @@
 modLoader="kotlinforforge"
 loaderVersion="[1,)"
+license="MIT"
 [[mods]]
 modId="lavafurnacemod"
 version="${version}"
@@ -13,12 +14,12 @@ Crafted just like normal furnace, but from 8 obsidian instead of cobblestone.
 [[dependencies.lavafurnacemod]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.lavafurnacemod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.3]"
     ordering="NONE"
     side="BOTH"
