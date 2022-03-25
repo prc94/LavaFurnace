@@ -9,6 +9,7 @@ There are 3 major differences from vanilla furnace:
 1. This one does not need fuel to be put inside it, lava is placed as a block right beneath the appliance
 2. It can run FOREVER!! it needs no refuel or any additional handling, just place lava beneath and enjoy
 3. It smells stuff 2 times slower
+
 Uh, and also it's crafted from obsidian, not cobblestone
 
 I made this mod quite a while ago when I was learning basics of the Minecraft Modding.
